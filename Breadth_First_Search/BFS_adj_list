@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int vertex;
+    struct node* next;
+};
+
+struct node* adjList[20];
+
+void addEdge(int a, int b) {
+    struct node* newNode = (struct node*)malloc(sizeof(struct node));
+    newNode->vertex = b;
+    newNode->next = adjList[a];
+    adjList[a] = newNode;
+}
+
+void printAdjList(int n) {
+    for (int i = 0; i < n; i++) {
+        struct node* temp = adjList[i];
+        printf("Adjacency list of vertex %d:", i);
+        while (temp != NULL) {
+            printf(" -> %d", temp->vertex);
+            temp = temp->next;
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int n, e;
+    int a, b;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++)
+        adjList[i] = NULL;
+
+    printf("Enter number of edges: ");
+    scanf("%d", &e);
+
+    printf("Enter each edge (u v) on separate lines:\n");
+    for (int i = 0; i < e; i++) {
+        scanf("%d %d", &a, &b);
+        addEdge(a, b);  // directed addition to match required format
+    }
+
+    printf("\n");
+    printAdjList(n);
+
+    return 0;
+}
+
+
+Output : 
+Enter number of vertices: 5 
+
+Enter number of edges: 6 
+
+Enter each edge (u v) on separate lines: 
+
+1 2 
+
+1 4  
+
+2 5 
+
+2 3 
+
+3 5 
+
+4 5  
+
+Adjacency list of vertex 0:     
+Adjacency list of vertex 1: -> 4 -> 2 
+Adjacency list of vertex 2: -> 3 -> 5 
+Adjacency list of vertex 3: -> 5 
+Adjacency list of vertex 4: -> 5 
