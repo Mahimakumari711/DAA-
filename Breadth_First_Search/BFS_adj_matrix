@@ -72,3 +72,21 @@ int main() {
     }
     bfs(adj_mat, 0);
 }
+
+
+Output :
+Enter number of vertices (<=5): 5 
+
+Enter adjacency matrix:  
+
+0 1 0 1 0  
+1 0 1 0 1  
+0 1 0 0 1  
+1 0 0 0 1  
+0 1 1 1 0  
+
+Vertex v0: Color : B Distance : 0 Parent : -1 
+Vertex v1: Color : B Distance : 1 Parent : 0 
+Vertex v2: Color : B Distance : 2 Parent : 1 
+Vertex v3: Color : B Distance : 1 Parent : 0 
+Vertex v4: Color : B Distance : 2 Parent : 1 
