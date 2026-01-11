@@ -1,0 +1,99 @@
+#include <stdio.h>
+#define MAX 5
+int n;
+int Q[MAX];
+int front = -1, rear = -1;
+struct vertex
+{
+    char col;
+    int dis;
+    int par;
+};
+struct vertex u[MAX];
+void enqueue(int x)
+{
+    if (rear == n - 1)
+    {
+        printf("\nQueue Overflow\n");
+        return;
+    }
+    if (front == -1)
+        front = 0;
+    Q[++rear] = x;
+}
+int dequeue()
+{
+    if (front == -1 || front > rear)
+    {
+        printf("\nQueue Empty\n");
+        return -1;
+    }
+    return Q[front++];
+}
+void bfs(int adj[][MAX], int s)
+{
+    int i, m;
+    for (i = 0; i < n; i++)
+    {
+        u[i].col = 'W';
+        u[i].dis = 9999;
+        u[i].par = -1;
+    }
+    u[s].col = 'G';
+    u[s].dis = 0;
+    u[s].par = -1;
+    enqueue(s);
+    while (front != -1 && front <= rear)
+    {
+        m = dequeue();
+        for (i = 0; i < n; i++)
+        {
+            if (adj[m][i] == 1 && u[i].col == 'W')
+            {
+                u[i].col = 'G';
+                u[i].dis = u[m].dis + 1;
+                u[i].par = m;
+                enqueue(i);
+            }
+        }
+        u[m].col = 'B';
+    }
+    for (i = 0; i < n; i++)
+    {
+        printf("\nVertex v%d:\n", i);
+        printf("Color : %c\n", u[i].col);
+        printf("Distance : %d\n", u[i].dis);
+        printf("Parent : %d\n", u[i].par);
+    }
+}
+int main()
+{
+    int adj_mat[MAX][MAX];
+    int i, j;
+    printf("\nEnter number of vertices (<=5): ");
+    scanf("%d", &n);
+    printf("\nEnter adjacency matrix:\n");
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            scanf("%d", &adj_mat[i][j]);
+        }
+    }
+    bfs(adj_mat, 0);
+}
+
+
+Output : 
+Enter number of vertices (<=5): 5 
+Enter adjacency matrix:  
+0 1 0 1 0  
+1 0 1 0 1  
+0 1 0 0 1  
+1 0 0 0 1  
+0 1 1 1 0  
+Vertex v0: Color : B Distance : 0 Parent : -1 
+Vertex v1: Color : B Distance : 1 Parent : 0 
+Vertex v2: Color : B Distance : 2 Parent : 1 
+Vertex v3: Color : B Distance : 1 Parent : 0 
+Vertex v4: Color : B Distance : 2 Parent : 1 
