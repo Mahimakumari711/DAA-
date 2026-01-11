@@ -84,3 +84,18 @@ int main()
     }
     printf("\n");
 }
+
+
+Output : 
+Enter the index size of array 
+3 
+ 
+Enter the value of array 
+42 
+22 
+12 
+ 
+Array after merge sort is : 
+12 
+22 
+42 
