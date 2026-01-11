@@ -1,0 +1,121 @@
+#include <stdio.h>
+#define infinite 999999
+int m[20][20];
+int s[20][20];
+int i, j;
+void matrix_chain(int p[], int size)
+{
+    int l, k;
+    int q;
+    for (i = 1; i <= size; i++)
+    {
+        m[i][i] = 0;
+    }
+    for (l = 2; l <= size; l++)
+    {
+        for (i = 1; i <= size - l + 1; i++)
+        {
+            j = i + l - 1;
+            m[i][j] = infinite;
+
+            for (k = i; k <= j - 1; k++)
+            {
+                q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];
+
+                if (q < m[i][j])
+                {
+                    m[i][j] = q;
+                    s[i][j] = k;
+                }
+            }
+        }
+    }
+
+    void print_optimal(int i, int j)
+    {
+        if (i == j)
+        {
+            printf("A%d", i);
+        }
+        else
+        {
+            printf("(");
+            print_optimal(i, s[i][j]);
+            print_optimal(s[i][j] + 1, j);
+            printf(")");
+        }
+    }
+
+    int main()
+    {
+        int p[20], k, n;
+
+        printf("\n Enter the index size of element \n");
+        scanf("%d", &n);
+
+        printf("\n Enter the dimension in array form \n");
+
+        for (k = 0; k <= n; k++)
+        {
+            printf("p%d : ", k);
+            scanf("%d", &p[k]);
+        }
+
+        matrix_chain(p, n);
+        i = 1;
+        j = n;
+
+        printf("\n Sequence of multiplication is : \n");
+
+        print_optimal(i, j);
+
+        printf("\n Minimum number of mult is %d", m[1][4]);
+        printf("\n M matrix is : \n");
+
+        for (i = 1; i <= n; i++)
+        {
+            for (j = 1; j <= n; j++)
+            {
+                printf("%d ", m[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n S matrix is : \n");
+
+        for (i = 1; i <= n; i++)
+        {
+            for (j = 1; j <= n; j++)
+            {
+                printf("%d ", s[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+    }
+
+
+Output : 
+Enter the index size of element 
+4 
+ 
+Enter the dimension in array form 
+p0 : 5 
+p1 : 4 
+p2 : 6 
+p3 : 2 
+p4 : 7 
+ 
+Sequence of multiplication is : 
+((A1(A2A3))A4) 
+ Minimum number of mult is 158 
+ M matrix is : 
+0 120 88 158 
+0 0 48 104 
+0 0 0 84 
+0 0 0 0 
+ 
+S matrix is : 
+0 1 1 3 
+0 0 2 3 
+0 0 0 3 
+0 0 0 0 
