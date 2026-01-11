@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int partition(int a[], int p, int r)
+{
+    int x, i, j, temp;
+    x = a[r];
+    i = p - 1;
+    for (j = p; j <= r - 1; j++)
+    {
+        if (a[j] <= x)
+        {
+            i = i + 1;
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+    temp = a[i + 1];
+    a[i + 1] = a[r];
+    a[r] = temp;
+
+    return i + 1;
+}
+int randomized_par(int a[], int p, int r)
+{
+    int i, temp;
+    i = (rand() % (r - p + 1)) + p;
+    temp = a[i];
+    a[i] = a[r];
+    a[r] = temp;
+    return (partition(a, p, r));
+}
+void random_quick_sort(int a[], int p, int r)
+{
+    int q;
+    if (p < r)
+    {
+        q = randomized_par(a, p, r);
+        random_quick_sort(a, p, q - 1);
+        random_quick_sort(a, q + 1, r);
+    }
+}
+int main()
+{
+    int arr[20];
+    int i, n;
+    printf("\n Enter the index size of array \n");
+    scanf("%d", &n);
+    printf("\n Enter the value of array \n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+    printf("\n Array after the ramdomized quick sort is : \n");
+    srand(time(NULL));
+    random_quick_sort(arr, 0, n - 1);
+    for (i = 0; i < n; i++)
+    {
+        printf("%d \t", arr[i]);
+    }
+    printf("\n");
+}
