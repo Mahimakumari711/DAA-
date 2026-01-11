@@ -1,0 +1,101 @@
+#include <stdio.h>
+int selection(int p[], int w[], int size)
+{
+    int x, y, temp, min;
+    for (x = 0; x < size - 1; x++)
+    {
+        min = x;
+        for (y = x + 1; y < size; y++)
+        {
+            if (p[min] < p[y])
+            {
+                min = y;
+            }
+        }
+        temp = p[x];
+        p[x] = p[min];
+        p[min] = temp;
+
+        temp = w[x];
+        w[x] = w[min];
+        w[min] = temp;
+    }
+}
+void fractional_knapsack(int m, int n, int p[], int w[])
+{
+    int i;
+    float x[n];
+    int objID[n];
+    selection(p, w, n);
+    for (i = 0; i < n; i++)
+    {
+        x[i] = 0.0;
+        objID[i] = -1;
+    }
+    int u = m;
+    for (i = 0; i < n; i++)
+    {
+        if (w[i] <= u)
+        {
+            x[i] = 1.0;
+            u = u - w[i];
+            objID[i] = i;
+        }
+        else
+        {
+            x[i] = u / w[i];
+            objID[i] = i;
+            u = 0;
+            break;
+        }
+    }
+    printf("\n Number of object with maximun profit is :\n ");
+    for (i = 0; i < n; i++)
+    {
+        printf("%.2f ", x[i]);
+    }
+    printf("\n");
+    for (i = 0; i < n; i++)
+    {
+        printf("%d ", objID[i]);
+    }
+    printf("\n");
+}
+int main()
+{
+    int p[20];
+    int w[20];
+    int size1, size2, i;
+    int m, n;
+
+    printf("\nEnter the number of object \n");
+    scanf("%d", &n);
+    printf("\n Enter the value of profit \n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &p[i]);
+    }
+    printf("\n Enter the value of weight \n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &w[i]);
+    }
+    printf("\n Enter the capacity of knapsack \n");
+    scanf("%d", &m);
+    fractional_knapsack(m, n, p, w);
+}
+
+
+Output :
+Enter the number of object  
+3 
+Enter the value of profit  
+25 24 15  
+Enter the value of weight  
+18 15 10 
+Enter the capacity of knapsack  
+20 
+  
+Number of object with maximun profit is : 
+1.00 0.00 0.00  
+0 1 -1 
