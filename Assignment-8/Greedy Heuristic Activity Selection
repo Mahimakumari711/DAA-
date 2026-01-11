@@ -1,0 +1,68 @@
+#include <stdio.h>
+struct Activity
+{
+    int start;
+    int finish;
+};
+void sort(struct Activity a[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int min = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (a[j].finish < a[min].finish)
+                min = j;
+        }
+        struct Activity temp = a[i];
+        a[i] = a[min];
+        a[min] = temp;
+    }
+}
+void greedy_heuristic_activity_selection(struct Activity a[], int n)
+{
+    sort(a, n);
+    printf("\nSelected activities (start, finish):\n");
+    int i = 0;
+    printf("(%d, %d)\n", a[i].start, a[i].finish);
+    for (int j = 1; j < n; j++)
+    {
+        if (a[j].start >= a[i].finish)
+        {
+            printf("(%d, %d)\n", a[j].start, a[j].finish);
+            i = j;
+        }
+    }
+}
+int main()
+{
+    int n;
+    printf("Enter the number of activities: ");
+    scanf("%d", &n);
+    struct Activity activities[20];
+    printf("\nEnter the start times:\n");
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &activities[i].start);
+    }
+    printf("\nEnter the finish times:\n");
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &activities[i].finish);
+    }
+    greedy_heuristic_activity_selection(activities, n);
+    return 0;
+}
+
+
+Output : 
+Enter the number of activities: 11 
+Enter the start times: 
+1 3 0 5 3 5 6 8 8 2 12  
+Enter the finish times: 
+4 5 6 7 9 9 10 11 12 14 16  
+Selected activities (start, finish): 
+(1, 4) 
+(5, 7) 
+(8, 11) 
+(12, 16) 
