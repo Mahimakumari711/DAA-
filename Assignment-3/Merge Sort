@@ -1,0 +1,86 @@
+#include <stdio.h>
+void merge1(int a[20], int low, int mid, int high)
+{
+    int h, i, j;
+    int B[20];
+    int k;
+    h = low;
+    i = low;
+    j = mid + 1;
+
+    while (h <= mid && j <= high)
+    {
+        if (a[h] <= a[j])
+        {
+            B[i] = a[h];
+            h++;
+        }
+        else
+        {
+            B[i] = a[j];
+            j++;
+        }
+        i++;
+    }
+    if (h > mid)
+    {
+        for (k = j; k <= high; k++)
+        {
+            B[i] = a[k];
+            i++;
+        }
+    }
+    else
+    {
+        for (k = h; k <= mid; k++)
+        {
+            B[i] = a[k];
+            i++;
+        }
+    }
+    for (k = low; k <= high; k++)
+    {
+        a[k] = B[k];
+    }
+}
+
+void merge_sort(int A[20], int low, int high)
+{
+    int mid;
+
+    if (low < high)
+    {
+        mid = (low + high) / 2;
+
+        merge_sort(A, low, mid);
+        merge_sort(A, mid + 1, high);
+
+        merge1(A, low, mid, high);
+    }
+}
+
+int main()
+{
+    int arr[20];
+    int i, n;
+
+    printf("\n Enter the index size of array \n");
+    scanf("%d", &n);
+
+    printf("\n Enter the value of array \n");
+
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("\n Array after merge sort is :\n");
+
+    merge_sort(arr, 0, n - 1);
+
+    for (i = 0; i < n; i++)
+    {
+        printf("%d \t", arr[i]);
+    }
+    printf("\n");
+}
