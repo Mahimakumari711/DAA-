@@ -111,3 +111,10 @@ int main ( )
   infix_to_postfix ( ) ; 
   printf (“\n Postfix expression is : %s \n “ , postfix ) ; 
 }
+
+
+Output : 
+Enter the infix expression :  
+a+b-c*d 
+ 
+Postfix expression is : ab+cd*-  
