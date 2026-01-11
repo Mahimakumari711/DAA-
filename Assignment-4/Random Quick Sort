@@ -62,3 +62,12 @@ int main()
     }
     printf("\n");
 }
+
+
+Output : 
+Enter the index size of array 
+10 
+Enter the value of array 
+34 90 99 78 65 43 77 23 11 10 
+Array after the ramdomized quick sort is : 
+10      11      23      34      43      65      77      78      90      99 
